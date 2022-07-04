@@ -1,5 +1,5 @@
 const db = require("../models/index");
-const Tiles = db.Tiles;
+const HardWood = db.HardWood;
 const addHardWoodItem = async (req, res) => {
 	const img = req.files[0];
 	console.log(img.path);
@@ -7,7 +7,7 @@ const addHardWoodItem = async (req, res) => {
 
 	data = { img: img.path, title, subtitle };
 
-	const product = await Tiles.create(data);
+	const product = await HardWood.create(data);
 	res.json(product);
 };
 module.exports = { addHardWoodItem };

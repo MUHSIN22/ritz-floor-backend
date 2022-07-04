@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	const Venyl = sequelize.define(
+	const Vinyl = sequelize.define(
 		"Venyl",
 		{
 			img: {
@@ -16,5 +16,5 @@ module.exports = (sequelize, DataTypes) => {
 			timestamps: false,
 		}
 	);
-	return Venyl;
+	return Vinyl;
 };

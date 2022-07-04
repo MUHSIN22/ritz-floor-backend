@@ -1,5 +1,5 @@
 const db = require("../models/index");
-const vinyl = db.Venyl;
+const vinyl = db.Vinyl;
 const addVinylItem = async (req, res) => {
 	const img = req.files[0];
 	console.log(img.path);
