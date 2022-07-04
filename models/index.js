@@ -18,7 +18,7 @@ db.Sequelize = Sequelize;
 
 db.User = require("./UserModel")(sequelize, DataTypes);
 db.ProductList = require("./Product-list")(sequelize, DataTypes);
-db.Venyl = require("./Venyl")(sequelize, DataTypes);
+db.Vinyl = require("./Venyl")(sequelize, DataTypes);
 
 db.sequelize.sync({ force: false }, () => console.log("sync is done"));
 
