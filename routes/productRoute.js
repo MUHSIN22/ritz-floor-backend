@@ -10,5 +10,23 @@ router.post(
 	upload.array("images", 2),
 	addVinylItem.addVinylItem
 );
+router.post(
+	"/post-tiles-item",
+	requireSignIn,
+	upload.array("images", 2),
+	addVinylItem.addVinylItem
+);
+router.post(
+	"/post-laminate-items",
+	requireSignIn,
+	upload.array("images", 2),
+	addVinylItem.addVinylItem
+);
+router.post(
+	"/post-hardwood-items",
+	requireSignIn,
+	upload.array("images", 2),
+	addVinylItem.addVinylItem
+);
 
 module.exports = router;
