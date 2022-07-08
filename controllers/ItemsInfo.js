@@ -14,6 +14,8 @@ const UpcommingOffers = db.UpcommingOffers;
 const Testimonials = db.Testimonials;
 const VideoTestimonials = db.VideoTestimonials;
 
+//controller for getting a single section details
+
 const getSection = async (req, res) => {
 	try {
 		const { page, section } = req.params;
@@ -73,6 +75,64 @@ const getSection = async (req, res) => {
 		console.log(err);
 	}
 };
+const getSingleItem = async (req, res) => {
+	try {
+		const { page, section, id } = req.params;
+		if (page == "homepage") {
+			if (section == "section-1") {
+				const items = await ProductSection.findOne({ where: { id: id } });
+				res.status(200).send({ success: true, items });
+			}
+			if (section == "section-2") {
+				const items = await WhyChooseSection.findOne({ where: { id: id } });
+				res.status(200).send({ success: true, items });
+			}
+			if (section == "section-3") {
+				const items = await ClientReview.findOne({ where: { id: id } });
+				res.status(200).send({ success: true, items });
+			}
+		} else if (page == "whychooseus") {
+			if (section === "section-2") {
+				const item = await Features.findOne({ where: { id: id } });
+				const images = await FeatureImages.findAll();
+				res.status(200).send({ success: true, item, images });
+			}
+			if (section === "section-3") {
+				const item = await OurWorks.findOne({ where: { id: id } });
+				const images = await OurWorkImages.findAll();
+				res.status(200).send({ success: true, item, images });
+			}
+		} else if (page == "specialoffers") {
+			if (section === "section-1") {
+				const item = await LaminateWood.findOne({ where: { id: id } });
+
+				res.status(200).send({ success: true, item });
+			}
+			if (section === "section-2") {
+				const item = await Offers.findOne({ where: { id: id } });
+
+				res.status(200).send({ success: true, item });
+			}
+			if (section === "section-3") {
+				const item = await UpcommingOffers.findOne({ where: { id: id } });
+				res.status(200).send({ success: true, item });
+			}
+		} else if (page == "testimonials") {
+			if (section === "section-2") {
+				const item = await Testimonials.findOne({ where: { id: id } });
+
+				res.status(200).send({ success: true, item });
+			}
+			if (section === "section-3") {
+				const item = await VideoTestimonials.findOne({ where: { id: id } });
+
+				res.status(200).send({ success: true, item });
+			}
+		}
+	} catch (err) {
+		console.log(err);
+	}
+};
 const updateItem = async (req, res) => {
 	try {
 		const { page, section, id } = req.params;
@@ -80,7 +140,7 @@ const updateItem = async (req, res) => {
 
 		let info;
 		const img = req.files[0].filename;
-		const { name, content, title } = req.body;
+		const { name, content, title, discount, url, role } = req.body;
 		if (page == "homepage") {
 			if (section == "section-1") {
 				if (title && img) {
@@ -114,43 +174,74 @@ const updateItem = async (req, res) => {
 			}
 		} else if (page == "whychooseus") {
 			if (section === "section-2") {
-				const item = await Features.update(info, { where: { id: id } });
-				const images = await FeatureImages.findAll();
-				res.status(200).send({ success: true, item, images });
+				if (title && content) {
+					info = { title, content };
+					const item = await Features.update(info, { where: { id: id } });
+					const images = await FeatureImages.findAll();
+					res.status(200).send({ success: true, item, images });
+				} else {
+					res.status(400).send({ message: "Please fill all the fields", info });
+				}
 			}
 			if (section === "section-3") {
-				const item = await OurWorks.update(info, { where: { id: id } });
+				if (title && content) {
+					const item = await OurWorks.update(info, { where: { id: id } });
 
-				res.status(200).send({ success: true, item, images });
+					res.status(200).send({ success: true, item, images });
+				} else {
+					res.status(400).send({ message: "Please fill all the fields", info });
+				}
 			}
 		} else if (page == "specialoffers") {
 			if (section === "section-1") {
-				const item = await LaminateWood.update(info, { where: { id: id } });
+				if (title && content && img) {
+					const item = await LaminateWood.update(info, { where: { id: id } });
 
-				res.status(200).send({ success: true, item });
+					res.status(200).send({ success: true, item });
+				} else {
+					res.status(400).send({ message: "Please fill all the fields", info });
+				}
 			}
 			if (section === "section-2") {
-				const item = await Offers.update(info, { where: { id: id } });
+				if (title && img && discount) {
+					const item = await Offers.update(info, { where: { id: id } });
 
-				res.status(200).send({ success: true, item });
+					res.status(200).send({ success: true, item });
+				} else {
+					res.status(400).send({ message: "Please fill all the fields", info });
+				}
 			}
 			if (section === "section-3") {
-				const item = await UpcommingOffers.update(info, { where: { id: id } });
+				if (img && discount) {
+					const item = await UpcommingOffers.update(info, {
+						where: { id: id },
+					});
 
-				res.status(200).send({ success: true, item });
+					res.status(200).send({ success: true, item });
+				} else {
+					res.status(400).send({ message: "Please fill all the fields", info });
+				}
 			}
 		} else if (page == "testimonials") {
 			if (section === "section-2") {
-				const item = await Testimonials.update(info, { where: { id: id } });
+				if (content && role && name && img) {
+					const item = await Testimonials.update(info, { where: { id: id } });
 
-				res.status(200).send({ success: true, item });
+					res.status(200).send({ success: true, item });
+				} else {
+					res.status(400).send({ message: "Please fill all the fields", info });
+				}
 			}
 			if (section === "section-3") {
-				const item = await VideoTestimonials.update(info, {
-					where: { id: id },
-				});
+				if (url) {
+					const item = await VideoTestimonials.update(info, {
+						where: { id: id },
+					});
 
-				res.status(200).send({ success: true, item });
+					res.status(200).send({ success: true, item });
+				} else {
+					res.status(400).send({ message: "Please fill all the fields", info });
+				}
 			}
 		}
 	} catch (err) {
@@ -237,4 +328,32 @@ const updateImages = async (req, res) => {
 		console.log(err);
 	}
 };
-module.exports = { getSection, updateItem, deleteContent, updateImages };
+const getSingleImage = async (req, res) => {
+	try {
+		const { page, section, id } = req.params;
+		const img = req.files[0].filename;
+
+		if (img) {
+			if (page == "whychooseus") {
+				if (section === "section-2") {
+					const item1 = await FeatureImages.findOne({ where: { id: id } });
+					res.status(200).send({ success: true, item1 });
+				}
+				if (section === "section-3") {
+					const item = await OurWorkImages.findOne({ where: { id: id } });
+					res.status(200).send({ success: true, item });
+				}
+			}
+		}
+	} catch (err) {
+		console.log(err);
+	}
+};
+module.exports = {
+	getSection,
+	updateItem,
+	deleteContent,
+	updateImages,
+	getSingleItem,
+	getSingleImage,
+};

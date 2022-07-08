@@ -29,4 +29,18 @@ router.put(
 	getSection.updateImages
 );
 
+//route for getting single item
+router.get(
+	"/get-single-item/:page/:section/:id",
+
+	getSection.getSingleItem
+);
+
+//route for getting single image
+router.get(
+	"/get-single-image/:page/:section/:id",
+
+	getSection.getSingleItem
+);
+
 module.exports = router;
