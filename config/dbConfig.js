@@ -2,7 +2,7 @@ module.exports = {
 	HOST: "localhost",
 	USER: "root",
 	PASSWORD: "joeroot@123",
-	DB: "ritz-floor-backend",
+	DB: "ritzfoor-admin-dashboard",
 	dialect: "mysql",
 	pool: {
 		max: 5,

@@ -16,9 +16,38 @@ const db = {};
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.User = require("./UserModel")(sequelize, DataTypes);
-db.ProductList = require("./Product-list")(sequelize, DataTypes);
-db.Vinyl = require("./Venyl")(sequelize, DataTypes);
+//Page Modals
+db.Pages = require("./pages/Pages")(sequelize, DataTypes);
+db.ProductSection = require("./pages/ProductSection")(sequelize, DataTypes);
+db.WhyChooseSection = require("./pages/WhyChooseUs")(sequelize, DataTypes);
+db.ClientReview = require("./pages/ClientReview")(sequelize, DataTypes);
+db.Features = require("./pages/Features")(sequelize, DataTypes);
+db.FeaturesImages = require("./pages/FeaturesImages")(sequelize, DataTypes);
+db.OurWorks = require("./pages/OurWorks")(sequelize, DataTypes);
+db.OurWorksImages = require("./pages/OurWorksImages")(sequelize, DataTypes);
+db.LaminateWood = require("./pages/LaminateWood")(sequelize, DataTypes);
+db.Offers = require("./pages/Offers")(sequelize, DataTypes);
+db.UpcommingOffers = require("./pages/UpcommingOffers")(sequelize, DataTypes);
+db.Testimonials = require("./pages/Testimonials")(sequelize, DataTypes);
+db.VideoTestimonials = require("./pages/VideoTestimonials")(
+	sequelize,
+	DataTypes
+);
+
+//User Modals
+db.User = require("./User")(sequelize, DataTypes);
+
+//Text-Testimonials
+db.TextTestimonials = require("./TextTestimonials")(sequelize, DataTypes);
+
+//ContactMessage
+db.ContactMessage = require("./ContactMessages")(sequelize, DataTypes);
+
+//Referals
+db.Referals = require("./Referals")(sequelize, DataTypes);
+
+//NewsLetter
+db.NewsLetters = require("./NewsLetters")(sequelize, DataTypes);
 
 db.sequelize.sync({ force: false }, () => console.log("sync is done"));
 
