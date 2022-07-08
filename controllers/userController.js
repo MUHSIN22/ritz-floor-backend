@@ -3,6 +3,8 @@ const User = db.User;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const Referals = db.Referals;
+
 //constroller for getting all user-list
 const getAllUser = async (req, res) => {
 	try {
@@ -40,9 +42,28 @@ const addUser = async (req, res) => {
 					reffered_by,
 					referal_code,
 				};
+
 				const salt = await bcrypt.genSalt(12);
 				info.password = await bcrypt.hash(info.password, salt);
 				const user = await User.create(info);
+				if (referal_code) {
+					const parent_user = await User.findOne({
+						where: { referal_code: referal_code },
+					});
+					console.log(parent_user.name);
+					if (parent_user) {
+						console.log(parent_user.name);
+						console.log(parent_user.name);
+						const parent_name = parent_user.name;
+						const refer_info = {
+							refered_by: parent_name,
+							refered_user: user.dataValues.name,
+							refer_code: referal_code,
+							checked: false,
+						};
+						const refer = await Referals.create(refer_info);
+					}
+				}
 				return res
 					.status(200)
 					.send({ message: "User created successfully", user });

@@ -13,13 +13,25 @@ const getNewsLetter = async (req, res) => {
 
 //constroller for sending a new newsletter
 const sendNewsLetter = async (req, res) => {
-	let email = req.body.email;
 	try {
-		const letters = await NewsLetter.create(email);
+		let { email } = req.body;
+
+		const letters = await NewsLetter.create({ email });
+		res.status(200).send({ success: true });
+	} catch (err) {
+		console.log(err);
+	}
+};
+//constroller for deleting a new newsletter
+const deleteNewsLetter = async (req, res) => {
+	try {
+		let { id } = req.params;
+
+		const letters = await NewsLetter.destroy({ where: { id: id } });
 		res.status(200).send({ success: true });
 	} catch (err) {
 		console.log(err);
 	}
 };
 
-module.exports = { getNewsLetter, sendNewsLetter };
+module.exports = { getNewsLetter, sendNewsLetter, deleteNewsLetter };

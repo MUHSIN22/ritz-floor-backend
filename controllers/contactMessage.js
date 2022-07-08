@@ -10,6 +10,7 @@ const getMessages = async (req, res) => {
 };
 const postMessage = async (req, res) => {
 	try {
+		const { message, email } = req.body;
 		if (message && email) {
 			const info = { message, email };
 			const newMessage = await ContactMessage.create(info);
@@ -20,6 +21,5 @@ const postMessage = async (req, res) => {
 	} catch (err) {
 		console.log(err);
 	}
-	const { message, email } = req.body;
 };
 module.exports = { getMessages, postMessage };

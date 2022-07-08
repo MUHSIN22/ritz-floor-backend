@@ -33,6 +33,7 @@ db.VideoTestimonials = require("./pages/VideoTestimonials")(
 	sequelize,
 	DataTypes
 );
+db.AboutUsList = require("./pages/AboutUsList")(sequelize, DataTypes);
 
 //User Modals
 db.User = require("./User")(sequelize, DataTypes);
@@ -49,6 +50,8 @@ db.Referals = require("./Referals")(sequelize, DataTypes);
 //NewsLetter
 db.NewsLetters = require("./NewsLetters")(sequelize, DataTypes);
 
-db.sequelize.sync({ force: true }, () => console.log("sync is done"));
+db.AboutUs = require("./pages/AboutUs")(sequelize, DataTypes);
+
+db.sequelize.sync({ force: false }, () => console.log("sync is done"));
 
 module.exports = db;

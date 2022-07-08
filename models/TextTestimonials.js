@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
 			img: {
 				type: DataTypes.STRING,
 			},
+			video: {
+				type: DataTypes.STRING,
+			},
 		},
 		{
 			timestamps: false,

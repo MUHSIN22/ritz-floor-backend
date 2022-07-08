@@ -4,6 +4,7 @@ const Pages = db.Pages;
 const ProductSection = db.ProductSection;
 const WhyChooseSection = db.WhyChooseSection;
 const ClientReview = db.ClientReview;
+const AboutUs = db.AboutUs;
 const OurWorks = db.OurWorks;
 const OurWorkImages = db.OurWorksImages;
 const Features = db.Features;
@@ -13,6 +14,7 @@ const Offers = db.Offers;
 const UpcommingOffers = db.UpcommingOffers;
 const Testimonials = db.Testimonials;
 const VideoTestimonials = db.VideoTestimonials;
+const AboutUsList = db.AboutUsList;
 
 //controller for getting a single section details
 
@@ -33,6 +35,12 @@ const getSection = async (req, res) => {
 				res.status(200).send({ success: true, items });
 			}
 		} else if (page == "whychooseus") {
+			if (section === "section-1") {
+				const item = await AboutUs.findAll();
+				const list = await AboutUsList.findAll();
+
+				res.status(200).send({ success: true, item, list });
+			}
 			if (section === "section-2") {
 				const item = await Features.findAll();
 				const images = await FeatureImages.findAll();
@@ -303,7 +311,9 @@ const deleteContent = async (req, res) => {
 				res.status(200).send({ success: true, item });
 			}
 		}
-	} catch (err) {}
+	} catch (err) {
+		console.log(err);
+	}
 };
 const updateImages = async (req, res) => {
 	try {
