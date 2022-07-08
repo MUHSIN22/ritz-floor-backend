@@ -14,4 +14,6 @@ router.delete("/delete_user/:id", getAllUser.deleteUser);
 
 //route for contact-message
 
+router.get("/get-single-user/:id", getAllUser.getSingleUser);
+
 module.exports = router;

@@ -49,6 +49,6 @@ db.Referals = require("./Referals")(sequelize, DataTypes);
 //NewsLetter
 db.NewsLetters = require("./NewsLetters")(sequelize, DataTypes);
 
-db.sequelize.sync({ force: false }, () => console.log("sync is done"));
+db.sequelize.sync({ force: true }, () => console.log("sync is done"));
 
 module.exports = db;

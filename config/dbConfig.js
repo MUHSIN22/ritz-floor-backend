@@ -1,7 +1,7 @@
 module.exports = {
 	HOST: "localhost",
 	USER: "root",
-	PASSWORD: "",
+	PASSWORD: "joeroot@123",
 	DB: "ritzfoor-admin-dashboard",
 	dialect: "mysql",
 	pool: {

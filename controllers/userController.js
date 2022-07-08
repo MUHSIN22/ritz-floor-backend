@@ -97,4 +97,17 @@ const loginUser = async (req, res) => {
 		console.log(err);
 	}
 };
-module.exports = { getAllUser, addUser, deleteUser, loginUser };
+const getSingleUser = async (req, res) => {
+	try {
+		const { id } = req.params;
+		if (id) {
+			const user = await User.findOne({ where: { id: id } });
+			res.status(200).send({ success: true, user });
+		} else {
+			res.status(400).send("Invalid request");
+		}
+	} catch (err) {
+		console.log(err);
+	}
+};
+module.exports = { getAllUser, addUser, deleteUser, loginUser, getSingleUser };
