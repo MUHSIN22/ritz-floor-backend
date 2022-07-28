@@ -1,16 +1,17 @@
 const express = require("express");
 const getAllUser = require("../controllers/userController");
 const textTestimonail = require("../controllers/textTestimonial");
+const adminAuthenticator = require("../middlewares/adminAuthenticator");
 
 const router = express.Router();
 
 //route for getting all all list
-router.get("/get-all-users", getAllUser.getAllUser);
-router.post("/add-user", getAllUser.addUser);
+router.get("/get-all-users", adminAuthenticator, getAllUser.getAllUser);
+router.post("/add-user", adminAuthenticator, getAllUser.addUser);
 router.post("/login-user", getAllUser.loginUser);
 
 //route for deleting user
-router.delete("/delete_user/:id", getAllUser.deleteUser);
+router.delete("/delete_user/:id", adminAuthenticator, getAllUser.deleteUser);
 
 //route for contact-message
 

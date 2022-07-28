@@ -1,9 +1,11 @@
-const { urlencoded } = require("express");
+const { urlencoded, application } = require("express");
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 var path = require("path");
 const body_parser = require("body-parser");
+const multer = require("multer");
+const upload = multer();
 
 const app = express();
 
@@ -21,6 +23,8 @@ app.use("/api/contact", require("./routes/contact"));
 app.use("/api/referal", require("./routes/referals"));
 app.use("/api/testimonial", require("./routes/testimonial"));
 app.use("/api/newsletter", require("./routes/newsLetter"));
+app.use('/api/front',require('./routes/frontPart'))
+app.use('/api/product-page',require('./routes/productPage'))
 app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(5000, () => console.log("server connected"));

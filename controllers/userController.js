@@ -8,7 +8,7 @@ const Referals = db.Referals;
 //constroller for getting all user-list
 const getAllUser = async (req, res) => {
 	try {
-		const users = await User.findAll();
+		const users = await User.findAll({attributes:['id','email']});
 		res.status(200).send({ success: true, users });
 	} catch (err) {
 		console.log(err);
@@ -19,57 +19,26 @@ const getAllUser = async (req, res) => {
 const addUser = async (req, res) => {
 	try {
 		const {
-			name,
 			email,
-			phone,
 			password,
-			confirm_password,
-			reffered_by,
-			referal_code,
 		} = req.body;
-		if (!name || !email || !phone || !password || !confirm_password) {
+		if (!email || !password ) {
 			return res.status(400).send({ message: "please enter all the fields" });
 		}
 		const user = await User.findOne({ where: { email: email } });
 
 		if (!user) {
-			if (password === confirm_password) {
 				const info = {
-					name,
 					email,
-					phone: phone,
-					password,
-					reffered_by,
-					referal_code,
+					password
 				};
 
 				const salt = await bcrypt.genSalt(12);
 				info.password = await bcrypt.hash(info.password, salt);
 				const user = await User.create(info);
-				if (referal_code) {
-					const parent_user = await User.findOne({
-						where: { referal_code: referal_code },
-					});
-					console.log(parent_user.name);
-					if (parent_user) {
-						console.log(parent_user.name);
-						console.log(parent_user.name);
-						const parent_name = parent_user.name;
-						const refer_info = {
-							refered_by: parent_name,
-							refered_user: user.dataValues.name,
-							refer_code: referal_code,
-							checked: false,
-						};
-						const refer = await Referals.create(refer_info);
-					}
-				}
 				return res
 					.status(200)
 					.send({ message: "User created successfully", user });
-			} else {
-				res.status(400).send({ message: "password donot match" });
-			}
 		} else {
 			res.status(400).send({ message: "User already exists" });
 		}
@@ -107,7 +76,7 @@ const loginUser = async (req, res) => {
 					.status(200)
 					.send({ message: "Logged In Successfully", token, exist });
 			} else {
-				res.status(400).send({ message: "Password Didnt Match" });
+				res.status(400).send({ message: "Password doesn't Match" });
 			}
 		} else {
 			res

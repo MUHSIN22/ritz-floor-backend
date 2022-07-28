@@ -2,16 +2,19 @@ module.exports = (sequelize, DataTypes) => {
 	const Referals = sequelize.define(
 		"Referals",
 		{
-			refered_by: {
+			name: {
 				type: DataTypes.TEXT,
 			},
-			refered_user: {
+			email: {
 				type: DataTypes.STRING,
 			},
-			refer_code: {
+			phone: {
 				type: DataTypes.STRING,
 			},
-			checked: {
+			referal_code:{
+				type: DataTypes.TEXT
+			},
+			status: {
 				type: DataTypes.BOOLEAN,
 				defaultValue: false,
 			},

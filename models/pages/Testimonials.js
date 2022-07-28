@@ -3,17 +3,14 @@ module.exports = (sequelize, DataTypes) => {
 		"Testimonials",
 		{
 			content: {
-				type: DataTypes.STRING,
+				type: DataTypes.TEXT,
 			},
 			role: {
 				type: DataTypes.TEXT,
 			},
 			name: {
 				type: DataTypes.STRING,
-			},
-			img: {
-				type: DataTypes.STRING,
-			},
+			}
 		},
 		{
 			timestamps: false,
@@ -21,3 +18,4 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	return Testimonials;
 };
+

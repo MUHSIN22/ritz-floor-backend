@@ -33,6 +33,10 @@ db.VideoTestimonials = require("./pages/VideoTestimonials")(
 	sequelize,
 	DataTypes
 );
+
+db.ProductShowPage = require('./pages/ProductShowPage')(sequelize,DataTypes)
+db.productPageImage = require('./pages/ProductPageImages')(sequelize,DataTypes);
+
 db.AboutUsList = require("./pages/AboutUsList")(sequelize, DataTypes);
 
 //User Modals

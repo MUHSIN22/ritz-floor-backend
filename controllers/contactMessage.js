@@ -10,9 +10,9 @@ const getMessages = async (req, res) => {
 };
 const postMessage = async (req, res) => {
 	try {
-		const { message, email } = req.body;
-		if (message && email) {
-			const info = { message, email };
+		const { name ,message, email } = req.body;
+		if (message && email && name) {
+			const info = { name, message, email };
 			const newMessage = await ContactMessage.create(info);
 			res
 				.status(200)

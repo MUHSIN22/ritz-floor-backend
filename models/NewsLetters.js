@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
 			email: {
 				type: DataTypes.STRING,
 			},
+			status:{
+				type: DataTypes.STRING,
+				defaultValue: 0,
+			}
 		},
 		{
 			timestamps: false,
@@ -12,3 +16,4 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	return NewsLetters;
 };
+

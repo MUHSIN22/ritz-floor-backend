@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
 			content: {
 				type: DataTypes.TEXT,
 			},
+			points: {
+				type: DataTypes.TEXT
+			},
 			IMG: {
 				type: DataTypes.STRING,
 			},
