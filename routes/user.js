@@ -7,7 +7,7 @@ const router = express.Router();
 
 //route for getting all all list
 router.get("/get-all-users", adminAuthenticator, getAllUser.getAllUser);
-router.post("/add-user", adminAuthenticator, getAllUser.addUser);
+router.post("/add-user", getAllUser.addUser);
 router.post("/login-user", getAllUser.loginUser);
 
 //route for deleting user

@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
 			message: {
 				type: DataTypes.TEXT,
 			},
+			phone: {
+				type: DataTypes.STRING
+			},
 			email: {
 				type: DataTypes.STRING,
 			},

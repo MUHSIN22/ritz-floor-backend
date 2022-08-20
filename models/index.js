@@ -36,6 +36,8 @@ db.VideoTestimonials = require("./pages/VideoTestimonials")(
 
 db.ProductShowPage = require('./pages/ProductShowPage')(sequelize,DataTypes)
 db.productPageImage = require('./pages/ProductPageImages')(sequelize,DataTypes);
+db.knowledgeSeries = require('./pages/KnowledgeSeries')(sequelize,DataTypes);
+db.knowledgeSereisImages = require('./pages/KnowledgeSeriesImages')(sequelize,DataTypes)
 
 db.AboutUsList = require("./pages/AboutUsList")(sequelize, DataTypes);
 
@@ -47,6 +49,7 @@ db.TextTestimonials = require("./TextTestimonials")(sequelize, DataTypes);
 
 //ContactMessage
 db.ContactMessage = require("./ContactMessages")(sequelize, DataTypes);
+db.FreeEstimation = require("./FreeEstimationForm")(sequelize, DataTypes);
 
 //Referals
 db.Referals = require("./Referals")(sequelize, DataTypes);
@@ -55,6 +58,7 @@ db.Referals = require("./Referals")(sequelize, DataTypes);
 db.NewsLetters = require("./NewsLetters")(sequelize, DataTypes);
 
 db.AboutUs = require("./pages/AboutUs")(sequelize, DataTypes);
+db.WorkingTime = require('./WorkingTime')(sequelize,DataTypes)
 
 db.sequelize.sync({ force: false }, () => console.log("sync is done"));
 

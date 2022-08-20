@@ -15,6 +15,7 @@ const getAllUser = async (req, res) => {
 	}
 };
 
+
 //controller for registering a user
 const addUser = async (req, res) => {
 	try {

@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
 			discount: {
 				type: DataTypes.INTEGER,
 			},
+			price: {
+				type: DataTypes.STRING
+			},
+			discount_price: {
+				type: DataTypes.STRING
+			}
 		},
 		{
 			timestamps: false,

@@ -7,13 +7,14 @@ const Referals = db.Referals;
 //constroller for generating a unique referral code
 const generateReferal = async (req, res) => {
 	try{
-		let {name,phone,email} = req.body;
+		let {name,phone,email,friendEmail} = req.body;
 		let date = new Date().toLocaleDateString().split('/');
 		let dateString = date[0]+date[1]+date[2][2]+date[2][3]
 		let nameCode = name.slice(0, 4);
 		let phoneCode = phone.slice(-4);
 		let referal_code = nameCode.toUpperCase() +phoneCode+dateString;
 		let info = {name,phone,email,referal_code};
+		if(friendEmail) info.friendEmail = friendEmail;
 		await Referals.create(info)
 		res.status(200).send({success:true})
 	}catch(err){
@@ -26,8 +27,12 @@ const sendReferalEmail = async (req,res) => {
 		let {id} = req.params;
 		let referal = await Referals.findOne({where:{id: id}})
 		if(referal){
-			let email = await sendEmail(referal.email,"Referal discount from Ritz floor",'',discountTemplate(referal.name,20,referal.referal_code))
-			console.log(email);
+			let email;
+			if(referal.friendEmail){
+				email = await sendEmail(referal.friendEmail,"Referal discount from Ritz floor",'',discountTemplate(referal.name,20,referal.referal_code))
+			}else{
+				email = await sendEmail(referal.email,"Referal discount from Ritz floor",'',discountTemplate(referal.name,20,referal.referal_code))
+			}
 			if(email.status === 1){
 				let statusChanger = await Referals.update({status: 1},{where:{id:id}});
 				console.log(statusChanger);
@@ -62,7 +67,7 @@ const deleteReferal = async (req,res) => {
 //constroller for getting refferrals with reffered by and date
 const getAllReferals = async (req, res) => {
 	try {
-		const item = await Referals.findAll({where:{status: 0},attributes:['id','name','email','phone','referal_code']});
+		const item = await Referals.findAll({where:{status: 0},attributes:['id','name','email','friendEmail','phone','referal_code']});
 		res.status(200).send({ success: true, item });
 	} catch (err) {
 		console.log(err);
@@ -71,3 +76,4 @@ const getAllReferals = async (req, res) => {
 
 
 module.exports = { deleteReferal ,generateReferal, getAllReferals , sendReferalEmail };
+

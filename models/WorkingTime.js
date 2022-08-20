@@ -1,14 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
-	const Testimonials = sequelize.define(
-		"Testimonials",
+	const WorkingTime = sequelize.define(
+		"Working Time",
 		{
-			content: {
-				type: DataTypes.TEXT,
-			},
-			rating: {
+			day: {
 				type: DataTypes.STRING,
 			},
-			name: {
+			from: {
+				type: DataTypes.STRING,
+			},
+			to: {
 				type: DataTypes.STRING,
 			}
 		},
@@ -16,6 +16,5 @@ module.exports = (sequelize, DataTypes) => {
 			timestamps: false,
 		}
 	);
-	return Testimonials;
+	return WorkingTime;
 };
-

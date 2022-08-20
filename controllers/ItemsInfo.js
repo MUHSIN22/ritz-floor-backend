@@ -55,7 +55,7 @@ const getSection = async (req, res) => {
 				res.status(200).send({ success: true, items : item });
 			}
 			if (section === "section-2") {
-				const items = await Offers.findAll({attributes:['id','title','discount']});
+				const items = await Offers.findAll({attributes:['id','title','discount','price',"discount_price"]});
 
 				res.status(200).send({ success: true, items });
 			}
@@ -66,7 +66,7 @@ const getSection = async (req, res) => {
 			}
 		} else if (page == "testimonials") {
 			if (section === "section-2") {
-				const item = await Testimonials.findAll();
+				const item = await Testimonials.findAll({attributes:['id','name','rating','content']});
 
 				res.status(200).send({ success: true, item });
 			}
@@ -149,7 +149,7 @@ const updateItem = async (req, res) => {
 			console.log('home');
 			if (section == "section-1") {
 				console.log(title,img,'section-1');
-				if (title && img) {
+				if (title || img) {
 					info = { title, img };
 					const items = await ProductSection.update(info, {
 						where: { id: id },
@@ -411,11 +411,10 @@ const uploadItems = async (req, res) => {
 		let info;
 		console.log(req.body,req.files);
 		const img = req.files && req.files[0] && req.files[0].filename;
-		const { name, content, title, discount, url, role } = req.body;
+		const { name, content, title, discount, url, role, rating, price } = req.body;
 		if (page == "homepage") {
 			console.log('home');
 			if (section == "section-1") {
-				console.log(title,img,'section-1');
 				if (title && img) {
 					info = { title, img };
 					const items = await ProductSection.create(info);
@@ -433,8 +432,9 @@ const uploadItems = async (req, res) => {
 				}
 			}
 			if (section == "section-3") {
-				if (name && img && content) {
-					info = { name, img, content };
+				if (name && content) {
+					info = { name, content };
+					if(img) info.img = img
 					const items = await ClientReview.create(info);
 					res.status(200).send({ success: true, items });
 				} else {
@@ -473,8 +473,9 @@ const uploadItems = async (req, res) => {
 				}
 			}
 			if (section === "section-2") {
-				if (title && img && discount) {
-					info = {title, img, discount}
+				if (title && img && discount && price) {
+					let discount_price = parseInt(price) - ((parseInt(discount)/100) * parseInt(price));
+					info = {title, img, discount,price, discount_price}
 					const items = await Offers.create(info);
 					res.status(200).send({ success: true, items : items });
 				} else {
@@ -493,8 +494,8 @@ const uploadItems = async (req, res) => {
 			}
 		} else if (page == "testimonials") {
 			if (section === "section-2") {
-				if (content && role && name) {
-					info = { content , role , name }
+				if (content && rating && name) {
+					info = { content , rating , name }
 					const item = await Testimonials.create(info);
 					res.status(200).send({ success: true, items : item });
 				} else {
