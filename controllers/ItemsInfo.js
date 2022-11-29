@@ -162,10 +162,17 @@ const updateItem = async (req, res) => {
 			if (section == "section-2") {
 				if (title && content && img) {
 					let info = {title,content,img}
-					const items = await WhyChooseSection.update(info, {
-						where: { id: id },
-					});
+					const isAlreadyAvailable = await WhyChooseSection.findOne({id:id});
+					if(isAlreadyAvailable){
+						const items = await WhyChooseSection.update(info, {
+							where: { id: id },
+						});
+						res.status(200).send({ success: true, items });
+						return true
+					}
+					const items = await WhyChooseSection.create(info);
 					res.status(200).send({ success: true, items });
+					
 				} else {
 					res.status(400).send({ message: "Please fill all the fields", info });
 				}
