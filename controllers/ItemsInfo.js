@@ -197,8 +197,17 @@ const updateItem = async (req, res) => {
 				if(img){
 					info.IMG = img
 				}
-				const items = await AboutUs.update(info, {where: {id: 1}});
+				const alreadyAvailable = await AboutUs.findOne({id: 1});
+				if(alreadyAvailable){
+					console.log("Alreasdy available");
+					const items = await AboutUs.update(info, {where: {id: 1}});
+					res.status(200).send({success: true, items});
+					return true
+				}
+				info.id = 1;
+				const items = await AboutUs.create(info);
 				res.status(200).send({success: true, items});
+				
 			}
 			if (section === "section-2") {
 				if (title && content) {
@@ -527,8 +536,24 @@ const uploadWhyChooseFeatures = async (req,res) => {
 		let img_dining = req.files && req.files.img_dining &&  req.files.img_dining[0].filename;
 		let img_kitchen = req.files && req.files.img_kitchen &&  req.files.img_kitchen[0].filename;
 		let img_balcony = req.files && req.files.img_balcony &&  req.files.img_balcony[0].filename;
-		console.log(title,content);
-		const item = await Features.update({
+		
+		let isAlreadyAvailable = await Features.findOne({id: 1});
+		if(isAlreadyAvailable){
+			const item = await Features.update({
+				title,
+				content,
+				img_living,
+				img_bed,
+				img_office,
+				img_dining,
+				img_kitchen,
+				img_balcony
+			},{where: {id:1}});
+			res.status(200).send({success:true, item})
+			return true
+		}
+		const item = await Features.create({
+			id: 1,
 			title,
 			content,
 			img_living,
@@ -537,8 +562,9 @@ const uploadWhyChooseFeatures = async (req,res) => {
 			img_dining,
 			img_kitchen,
 			img_balcony
-		},{where: {id:1}});
+		});
 		res.status(200).send({success:true, item})
+		
 	}catch(err){
 		console.log(err);
 		res.status(400).send({success:false,err});
@@ -556,7 +582,25 @@ const uploadAboutWorks = async (req,res) => {
 		let img_6 = req.files && req.files.img_6 &&  req.files.img_6[0].filename;
 		let img_7 = req.files && req.files.img_7 &&  req.files.img_7[0].filename;
 		let img_8 = req.files && req.files.img_8 &&  req.files.img_8[0].filename;
-		const item = await OurWorks.update({
+		const isAlreadyAvailable = await OurWorks.findOne({id:1})
+		if(isAlreadyAvailable){
+			const item = await OurWorks.update({
+				title,
+				content,
+				img_1,
+				img_2,
+				img_3,
+				img_4,
+				img_5,
+				img_6,
+				img_7,
+				img_8
+			},{where: {id:1}});
+			res.status(200).send({success:true, item})
+			return true
+		}
+		const item = await OurWorks.create({
+			id:1,
 			title,
 			content,
 			img_1,
@@ -569,6 +613,7 @@ const uploadAboutWorks = async (req,res) => {
 			img_8
 		},{where: {id:1}});
 		res.status(200).send({success:true, item})
+		
 	}catch(err){
 		console.log(err);
 		res.status(400).send({success:false,err});
